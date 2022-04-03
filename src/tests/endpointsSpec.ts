@@ -10,7 +10,6 @@ describe('users end points',()=>{
 
     it('should create user',async()=>{
         const res =  await  req.post('/api/users/create')
-           .set("x_auth_token",x_auth_token)
            .send({
               "firstName":"aa",
                "lastName":"bb",

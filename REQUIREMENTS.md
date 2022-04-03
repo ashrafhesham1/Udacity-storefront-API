@@ -24,7 +24,7 @@ Endpoint : `/api/users`
 
 `/index` : show all users [token required] \[get]
 
-`/create` : create new user [token required] \[post] \[body parameters : {'firstName':string, "lastName":string, "password":string}]
+`/create` : create new user  \[post] \[body parameters : {'firstName':string, "lastName":string, "password":string}]
 
 `/show` : show  user by id [token required] \[get] \[body parameters : {'id':Number}]
 

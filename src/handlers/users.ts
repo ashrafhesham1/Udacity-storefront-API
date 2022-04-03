@@ -25,5 +25,5 @@ const showUser = async (req: Request, res:Response):Promise<void> => {
  export const userRoutes = ( app: express.Application ) => {
      app.get('/index',authenticate,index);
      app.get('/show',authenticate,showUser);
-     app.post('/create',authenticate,hashPass,createUser);
+     app.post('/create',hashPass,createUser);
  }
