@@ -47,14 +47,14 @@ export class Orders {
         }
      }
 
-     async edit( id: Number,active: boolean ):Promise<order> {
+     async edit( id: Number,active: boolean ):Promise<Number> {
         try {
          
          const connection = await client.connect();
          const sql = `UPDATE orders SET active=${active} WHERE id=${id} ;`
          const res = await connection.query(sql)
          connection.release();
-         return res.rows[0];
+         return res.rowCount;
  
         } catch (error) {
             throw new Error (`cannot edit the order ${error}`);

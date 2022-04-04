@@ -18,4 +18,10 @@ export const authenticate = async (req:Request,res:Response,next:NextFunction) :
     
     
 }
+
+export const createJWT =  (id:string) : string=>{
+    const tokenSecret = process.env.token_SECRET as jwt.Secret;
+    const token = jwt.sign({id},tokenSecret)
+    return token
+}
      

@@ -34,20 +34,20 @@ export class ProductOrders {
         }
      }
 
-     async create(orderId: Number, productId: Number, quantity: Number ):Promise<productOrder> {
+     async create(orderId: Number, productId: Number, quantity: Number ):Promise<Number> {
         try {
          const connection = await client.connect();
          const sql = `INSERT INTO products_orders (order_id,product_id,quantity) VALUES (${orderId},${productId},${quantity}) ;`
          const res = await connection.query(sql)
          connection.release();
-         return res.rows[0];
+         return res.rowCount;
  
         } catch (error) {
             throw new Error (`cannot create the order ${error}`);
         }
      }
 
-     async edit( orderId: Number, productId: Number, quantity: Number ):Promise<productOrder> {
+     async edit( orderId: Number, productId: Number, quantity: Number ):Promise<Number> {
         try {
          
          const connection = await client.connect();
@@ -55,7 +55,7 @@ export class ProductOrders {
          console.log(sql);
          const res = await connection.query(sql)
          connection.release();
-         return res.rows[0];
+         return res.rowCount;
  
         } catch (error) {
             throw new Error (`cannot edit the order ${error}`);

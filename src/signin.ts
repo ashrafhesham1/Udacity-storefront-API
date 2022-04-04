@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request,Response } from 'express'
 import { Users } from './models/users'
-import jwt, { Jwt } from 'jsonwebtoken'
+import { createJWT } from './middleware/authenticate'
 
 dotenv.config();
 const users = new Users();
@@ -21,8 +21,3 @@ export const signIn = async ( req:Request, res:Response) =>{
     
 }
 
-export const createJWT =  (id:string) : string=>{
-    const tokenSecret = process.env.token_SECRET as jwt.Secret;
-    const token = jwt.sign({id},tokenSecret)
-    return token
-}

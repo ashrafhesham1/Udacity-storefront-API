@@ -47,7 +47,7 @@ export class Products {
         }
      }
 
-     async edit( id: Number, newName: string = "", newPrice: Number = 0 ):Promise<product> {
+     async edit( id: Number, newName: string = "", newPrice: Number = 0 ):Promise<Number> {
         try {
          
          const oldProduct = await this.show(id);
@@ -58,7 +58,7 @@ export class Products {
          const sql = `UPDATE products SET name='${newName}' , price=${newPrice} WHERE id=${id} ;`
          const res = await connection.query(sql)
          connection.release();
-         return res.rows[0];
+         return res.rowCount ;
  
         } catch (error) {
             throw new Error (`cannot edit the product ${error}`);

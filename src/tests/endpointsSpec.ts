@@ -1,6 +1,6 @@
 import app from "../server";
 import supertest from "supertest";
-import { createJWT } from "../signin";
+import { createJWT } from "../middleware/authenticate";
 
 const x_auth_token = createJWT("1")
 
