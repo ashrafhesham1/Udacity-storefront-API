@@ -5,26 +5,48 @@ import { authenticate } from "../middleware/authenticate";
 const products = new Products();
 
 const index = async (_req: Request, res:Response):Promise<void> => {
-   const productsIndex = await products.index();
-   res.json(productsIndex); 
+
+   try {
+      const productsIndex = await products.index();
+      res.json(productsIndex); 
+   } catch (error) {
+      throw new Error(`cannot shpw the products ${error}`);
+   }
 }
 
 const showProduct = async (req: Request, res:Response):Promise<void> => {
-    const product = await products.show(Number(req.body.id));
-    res.json(product); 
+
+    try {
+      const product = await products.show(Number(req.body.id));
+      res.json(product); 
+   } catch (error) {
+      throw new Error(`cannot show the product ${error}`);
+   }
  }
 
  const createProduct = async (req: Request, res:Response):Promise<void> => {
-    const product = await products.create(req.body.name,req.body.price);
-    res.json(product); 
+
+    try {
+      const product = await products.create(req.body.name,req.body.price);
+      res.json(product); 
+   } catch (error) {
+      throw new Error(`cannot create the product ${error}`);
+   }
  }
 
  const editProduct = async (req: Request, res:Response):Promise<void> => {
-    const newName = req.body.name || '';
-    const newPrice = req.body.price || 0 ;
 
-    const product = await products.edit(req.body.id,newName,newPrice);
-    res.json(product); 
+    try {
+
+      const newName = req.body.name || '';
+      const newPrice = req.body.price || 0 ;
+  
+      const product = await products.edit(req.body.id,newName,newPrice);
+      res.json(product); 
+
+   } catch (error) {
+      throw new Error(`cannot edit the product ${error}`);
+   }
 
  }
 

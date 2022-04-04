@@ -9,7 +9,7 @@
     "jasmine": "jasmine",
     "build": "npx tsc",
     "test": "npm run build && npm run jasmine",
-    "start": "npx nodemon src/server.ts"
+    "start": "npx nodemon src/server.ts --ignore database.json"
   },
   "author": "Udacity",
   "license": "ISC",

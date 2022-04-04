@@ -5,8 +5,8 @@ an API that support a storefront application that mange users, orders , and prod
 ### Installing dependencies & Packages :
 						`npm install`
 ### DataBase :
-- set up your Postgres database parameters in `database.json` and `.env`  in the project root -as shown below-
-- in your terminal run the migrations to install the database schema : `db-migrate` - make sure that you installed the API dependencies first -
+- set up your Postgres database parameters in `.env`  in the project root -as shown below-
+- in your terminal run the migrations to install the database schema : `db-migrate up` - make sure that you installed the API dependencies first -
 
 - **at this point  the API should be able to connect to the database and run without a problems**
 
@@ -24,26 +24,7 @@ after running the server it will start listenning on the port dedicated in `.env
     POSTGRES_PASSWORD = [Your postgres password]
     SERVER_PORT = [the port that the server will listen to]
     token_SECRET = [Your JWT secret]
- ### database.json
  
-
-    {
-    
-    "[Your db environment]": {
-    
-    "driver": "pg",
-    
-    "host": "[Your postgres host]",
-    
-    "database": "[Your postgres database]",
-    
-    "user": "[Your postgres user]",
-    
-    "password": "[Your postgres password]"
-    
-    }
-    
-    }  
 
   
 ## scripts

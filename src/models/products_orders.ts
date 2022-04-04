@@ -52,7 +52,6 @@ export class ProductOrders {
          
          const connection = await client.connect();
          const sql = `UPDATE products_orders SET quantity=${quantity} WHERE order_id=${orderId} AND product_id=${productId} ;`
-         console.log(sql);
          const res = await connection.query(sql)
          connection.release();
          return res.rowCount;
