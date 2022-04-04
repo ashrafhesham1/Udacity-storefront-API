@@ -16,9 +16,10 @@ an API that support a storefront application that mange users, orders , and prod
 after running the server it will start listenning on the port dedicated in `.env` 
 
 ### Environment variables `.env`
-
+    ENVIRONMENT = [environment]
     POSTGRES_HOST = [Your postgres host]
     POSTGRES_DB = [Your postgres database]
+    POSTGRES_DB_TEST = [Your test postgres database]
     POSTGRES_USER = [Your postgres user]
     POSTGRES_PASSWORD = [Your postgres password]
     SERVER_PORT = [the port that the server will listen to]
