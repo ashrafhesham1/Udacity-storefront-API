@@ -18,21 +18,22 @@ const updateDBJson = (host: string , database:string, user:string, password:stri
 
 dotenv.config();
 
-const {POSTGRES_HOST,POSTGRES_USER,POSTGRES_PASSWORD}= process.env ;
+const {POSTGRES_HOST,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_PORT}= process.env ;
 const POSTGRES_DB = process.env.ENVIRONMENT === "test" ? process.env.POSTGRES_DB_TEST : process.env.POSTGRES_DB
 
 const client = new Pool({
     host : POSTGRES_HOST,
     database: POSTGRES_DB,
     user : POSTGRES_USER,
-    password: POSTGRES_PASSWORD
+    password: POSTGRES_PASSWORD,
+    port:POSTGRES_PORT as unknown as number
 })
 
-updateDBJson(
+/*updateDBJson(
     POSTGRES_HOST as string,
     POSTGRES_DB as string,
     POSTGRES_USER as string,
-    POSTGRES_PASSWORD as string )
+    POSTGRES_PASSWORD as string )*/
 
 export default client
 

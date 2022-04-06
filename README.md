@@ -22,6 +22,7 @@ after running the server it will start listenning on the port dedicated in `.env
     POSTGRES_DB_TEST = [Your test postgres database]
     POSTGRES_USER = [Your postgres user]
     POSTGRES_PASSWORD = [Your postgres password]
+    POSTGRES_PORT = [the port that the database will listen to]
     SERVER_PORT = [the port that the server will listen to]
     token_SECRET = [Your JWT secret]
  
