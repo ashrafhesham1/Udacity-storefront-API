@@ -1,7 +1,8 @@
 import { userRoutes } from "../handlers/users";
 import { productsRoutes } from "../handlers/products";
 import { ordersRoutes } from "../handlers/orders";
-import { ProductOrdersRoutes } from "../handlers/products_orders";
+import { suppliersRoutes } from "../handlers/suppliers";
+import { departmentsRoutes } from "../handlers/departments";
 import { signIn } from "../signin";
 import express from "express";
 
@@ -14,18 +15,18 @@ productsRoutes(productsRouter);
 const orderRouter = express();
 ordersRoutes(orderRouter);
 
-const ProductOrdersRouter = express();
-ProductOrdersRoutes(ProductOrdersRouter);
+const suppliersRouter = express();
+suppliersRoutes(suppliersRouter);
+
+const departmentsRouter = express();
+departmentsRoutes(departmentsRouter);
 
 const router = express();
-router.post('/signin',signIn);
-router.use('/users',userRouter);
-router.use('/products',productsRouter);
-router.use('/orders',orderRouter);
-router.use('/productorder',ProductOrdersRouter);
+router.post("/signin", signIn);
+router.use("/users", userRouter);
+router.use("/products", productsRouter);
+router.use("/orders", orderRouter);
+router.use("/suppliers", suppliersRouter);
+router.use("/departments", departmentsRouter);
 
-
-
-export default router
-
-
+export default router;

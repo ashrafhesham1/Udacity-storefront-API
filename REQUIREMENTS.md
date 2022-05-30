@@ -1,20 +1,10 @@
-
 # API Requirements
 
 The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
 
-  
-
-These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application.
-
-  
-
-  
-
 # API Routes
 
-*note : when a token is required it should be passed through a header with a key `x_auth_token`*
-  
+_note : when a token is required it should be passed through a header with a key `x_auth_token`_
 
 ## User routes
 
@@ -24,10 +14,13 @@ Endpoint : `/api/users`
 
 `/index` : show all users [token required] \[get]
 
-`/create` : create new user  \[post] \[body parameters : {'firstName':string, "lastName":string, "password":string}]
+`/:id` : show user by id [token required] \[get]
 
-`/show` : show  user by id [token required] \[get] \[body parameters : {'id':Number}]
+`/create` : create new user \[post] \[parameters : {'firstName':string, "lastName":string, "password":string}]
 
+`edit/:id` : edit user by id [token required] \[get] \[parameters : {'firstName':string, "lastName":string}]
+
+`/delete/:id` : delete user by id [token required] \[post]
 
 ## Products routes
 
@@ -35,13 +28,15 @@ Endpoint : `/api/products`
 
 ### RESTFUL Routes:
 
-`/index` : show all products  \[get]
+`/index` : show all products \[get]
 
-`/create` : create new product [token required] \[post] \[body parameters : {'name':string,"price":Number}]
+`/:id` : show product by id \[get]
 
-`/edit` : edit product by id [token required] \[post] \[body parameters : {'id':Number', name':string -optional- , "price":Number -optional }]
+`/create` : create new product [token required] \[post] \[parameters : {'name':string, "price":Number, departmentId: Numbet, supplierId:Number}]
 
-`/show` : show  product by id  \[get] \[body parameters : {'id':Number}]
+`/edit/:id` : edit product by id [token required] \[post] \[parameters : {name':string -optional- , "price":Number -optional }]
+
+`/delete/:id` : delete product by id [token required] \[post]
 
 ## Orders routes
 
@@ -49,38 +44,65 @@ Endpoint : `/api/orders`
 
 ### RESTFUL Routes:
 
-`/index` : show all orders  \[get] \[token required] 
+`/index` : show all orders \[get] \[token required]
 
-`/create` : create new order [token required] \[post] \[body parameters : {'userId':Number,"active":Boolean}]
+`/:id` : show order by id \[token required] \[get]
 
-`/edit` : edit order by id [token required] \[post] \[body parameters : {'id':Number', active':Boolean -optional-  }]
+`/create` : create new order [token required] \[post] \[parameters : {'userId':Number,"active":Boolean}]
 
-`/show` : show  order by id \[token required] \[get]   \[body parameters : {'id':Number}]
+`/edit/:id` : edit order by id [token required] \[post] \[parameters : { active':Boolean }]
 
-`/current` : show orders by the current user \[token required]  \[get]  \[body parameters : {'id':Number}]
+`/delete/:id` : delete an order by id [token required] \[post]
 
-## Products routes
+`/:id/addProduct` : add product to an order by id [token required] \[post] \[parameters : {"productId":Number,"quantity":Number}]
 
-Endpoint : `/api/productorder`
+`/:id/editProduct` : edit product in an order by id [token required] \[post] \[parameters : {"productId":Number,"quantity":Number}]
+
+`/:id/deleteProduct` : delete product from an order by id [token required] \[post] \[parameters : {"productId":Number}]
+
+`/active/:userId` : show active orders by specific user by id \[token required] \[get]
+
+'/:id/products' : show all products report for an order by id \[token required] \[get]
+
+## suppliers routes
+
+Endpoint : `/api/suppliers`
 
 ### RESTFUL Routes:
 
-`/index` : show all products existed in orders [token required] \[get]
+`/index` : show all suppliers [token required] \[get]
 
-`/create` : put new product in an order by id [token required] \[post] \[body parameters : {'orderId':Number,"productId":Number,"quantity":Number}]
+`/:id` : show a supplier by id \[get]
 
-`/edit` : edit the quantity of a product in an orderby id [token required] \[post] \[body parameters : {'orderId':Number,"productId":Number,"quantity":Number}]
+`/create` : create new supplier [token required] \[post] \[parameters : {'name':String,"phone":Number}]
 
-`/show` : show  quantity of a product in an order by id  \[get] \[body parameters : {'orderId':Number,"productId":Number}]
+`/edit/:id` : edit supplier informations [token required] \[post] \[parameters : {'name':String -optional- ,"phone":Number -optional-}]
+
+`/delete/:id` : delete a supplier by id [token required] \[post]
+
+## departments routes
+
+Endpoint : `/api/departments`
+
+### RESTFUL Routes:
+
+`/index` : show all departments [token required] \[get]
+
+`/:id` : show a department by id \[get]
+
+`/create` : create new department [token required] \[post] \[parameters : {'name':String}]
+
+`/edit/:id` : edit department informations [token required] \[post] \[parameters : {'name':String }]
+
+`/delete/:id` : delete a department by id [token required] \[post]
 
 ## Sign in route
 
-Endpoint : `/api/signin` 
+Endpoint : `/api/signin`
 
-sign the user into the application and return a token [token required] \[post] \[body parameters : {'id':Number,"password":String}]
+sign the user into the application and return a token [token required] \[post] \[parameters : {'id':Number,"password":String}]
 
-
-# DataBase Shapes
+# DataBase Schema
 
 #### Products
 
@@ -90,18 +112,19 @@ sign the user into the application and return a token [token required] \[post] \
 
 - price : double
 
- 
+- department_id : integer [ foreign key (departments)]
+
+- supplier_id : integer [ foreign key (suppliers)]
+
 #### User
 
 - id : serial [ Primary key ]
 
-- first_name : varchar 
+- first_name : varchar
 
 - last_name : varchar
 
 - password : text
-
-  
 
 #### Orders
 
@@ -121,7 +144,16 @@ sign the user into the application and return a token [token required] \[post] \
 
   [**Primary key ( order_id, product_id )**]
 
+#### suppliers
 
-	
+- id : Serial [ Primary key ]
 
+- name : varchar
 
+- phone : Number
+
+#### departments
+
+- id : Serial [ Primary key ]
+
+- name : varchar

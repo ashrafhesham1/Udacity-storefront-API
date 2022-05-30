@@ -1,21 +1,28 @@
 ## Storefront API
+
 an API that support a storefront application that mange users, orders , and products.
 
 ## Setup
+
 ### Installing dependencies & Packages :
-						`npm install`
+
+    					`npm install`
+
 ### DataBase :
-- set up your Postgres database parameters in `.env`  in the project root -as shown below-
+
+- set up your Postgres database parameters in `.env` in the project root -as shown below-
 - in your terminal run the migrations to install the database schema : `db-migrate up` - make sure that you installed the API dependencies first -
 
-- **at this point  the API should be able to connect to the database and run without a problems**
+- **at this point the API should be able to connect to the database and run without a problem**
 
-- *note : in oreder to run the tests the test database must be empty*
+- _note : in oreder to run the tests the test database must be empty_
 
-### Running the server 
-after running the server it will start listenning on the port dedicated in `.env` 
+### Running the server
+
+after running the server it will start listenning on the port dedicated in `.env`
 
 ### Environment variables `.env`
+
     ENVIRONMENT = [environment]
     POSTGRES_HOST = [Your postgres host]
     POSTGRES_DB = [Your postgres database]
@@ -23,11 +30,10 @@ after running the server it will start listenning on the port dedicated in `.env
     POSTGRES_USER = [Your postgres user]
     POSTGRES_PASSWORD = [Your postgres password]
     POSTGRES_PORT = [the port that the database will listen to]
+    SERVER_HOST = [your server host]
     SERVER_PORT = [the port that the server will listen to]
     token_SECRET = [Your JWT secret]
- 
 
-  
 ## scripts
 
 `"jasmine"`: **"jasmine",**
@@ -41,6 +47,7 @@ after running the server it will start listenning on the port dedicated in `.env
 `"start"`: **"npx nodemon src/index.ts"**
 
 ## Technologies
+
 **node js**
 
 **express js**
@@ -49,3 +56,4 @@ after running the server it will start listenning on the port dedicated in `.env
 
 **Postgre SQL**
 
+**REST API**

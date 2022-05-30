@@ -1,0 +1,7 @@
+ALTER TABLE products  
+ADD COLUMN department_id INTEGER REFERENCES departments(id) ON DELETE CASCADE;
+
+ALTER TABLE products
+ADD COLUMN supplier_id INTEGER REFERENCES suppliers(id) ON DELETE CASCADE ;
+
+

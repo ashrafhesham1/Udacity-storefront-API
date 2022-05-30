@@ -1,32 +1,28 @@
-import express, { Request, Response } from 'express'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import router from './Routes/router'
+import express, { Request, Response } from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import router from "./Routes/router";
+import config from "./config";
 
+const configs = config();
 
+const app: express.Application = express();
 
-dotenv.config()
+const host = configs.serverHost;
+const port = configs.serverPort;
+const address: string = `http://${host}:${port}`;
 
-const app: express.Application = express()
+app.use(bodyParser.json());
+app.use(cors());
 
-const port = process.env.SERVER_PORT ;
-const address: string = `http://localhost:${port}`
+app.get("/", (req: Request, res: Response) => {
+  res.send(`Please visit '/api' to start using the storefront api`);
+});
 
-app.use(bodyParser.json())
-app.use(cors())
-
-app.get('/',(req: Request, res: Response)=> {
-    res.send(`Please visit '/api' to start using the storefront api`)
-})
-
-app.use('/api',router);
-
+app.use("/api", router);
 
 app.listen(port, function () {
-    console.log(`starting app on: ${address}`)
-})
-
-
+  console.log(`starting app on: ${address}`);
+});
 
 export default app;

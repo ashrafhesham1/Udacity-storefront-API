@@ -1,66 +1,57 @@
-import client from "../datebase";
+import { query } from "../datebase";
+import ProductsOrdersSql from "./sql/products_ordersSql";
 
 export type productOrder = {
-    orderId: Number;
-    productId: Number;
-    quantity: Number;
-}
+  orderId: Number;
+  productId: Number;
+  quantity: Number;
+};
 
 export class ProductOrders {
+  productsOrdersSql: ProductsOrdersSql;
 
-     async index():Promise<productOrder[]> {
-       try {
-        const connection = await client.connect()
-        const sql = ' SELECT * FROM products_orders ;'
-        const res = await connection.query(sql)
-        connection.release();
-        return res.rows;
+  constructor() {
+    this.productsOrdersSql = new ProductsOrdersSql();
+  }
 
-       } catch (error) {
-           throw new Error (`couldn't get the products in the orders ${error}`);
-       }
+  async create(
+    orderId: number,
+    productId: number,
+    quantity: Number
+  ): Promise<number> {
+    try {
+      const res = await query(
+        this.productsOrdersSql.create(orderId, productId, quantity)
+      );
+      return res.rows[0];
+    } catch (error) {
+      throw new Error(`cannot create the product-order relation ${error}`);
     }
+  }
 
-    async show( orderId: Number, productId: Number ):Promise<productOrder> {
-        try {
-         const connection = await client.connect()
-         const sql = `SELECT * FROM products_orders WHERE order_id=${orderId} AND product_id=${productId} ;`
-         const res = await connection.query(sql)
-         connection.release();
-         return res.rows[0];
- 
-        } catch (error) {
-            throw new Error (`couldn't get the order ${error}`);
-        }
-     }
+  async edit(
+    orderId: number,
+    productId: number,
+    quantity: number
+  ): Promise<number> {
+    try {
+      const res = await query(
+        this.productsOrdersSql.edit(orderId, productId, quantity)
+      );
+      return res.rows[0];
+    } catch (error) {
+      throw new Error(`cannot edit the order ${error}`);
+    }
+  }
 
-     async create(orderId: Number, productId: Number, quantity: Number ):Promise<Number> {
-        try {
-         const connection = await client.connect();
-         const sql = `INSERT INTO products_orders (order_id,product_id,quantity) VALUES (${orderId},${productId},${quantity}) ;`
-         const res = await connection.query(sql)
-         connection.release();
-         return res.rowCount;
- 
-        } catch (error) {
-            throw new Error (`cannot create the order ${error}`);
-        }
-     }
-
-     async edit( orderId: Number, productId: Number, quantity: Number ):Promise<Number> {
-        try {
-         
-         const connection = await client.connect();
-         const sql = `UPDATE products_orders SET quantity=${quantity} WHERE order_id=${orderId} AND product_id=${productId} ;`
-         const res = await connection.query(sql)
-         connection.release();
-         return res.rowCount;
- 
-        } catch (error) {
-            throw new Error (`cannot edit the order ${error}`);
-        }
-     }
-
-    
-
+  async delete(orderId: number, productId: number): Promise<number> {
+    try {
+      const res = await query(
+        this.productsOrdersSql.delete(orderId, productId)
+      );
+      return res.rows[0];
+    } catch (error) {
+      throw new Error(`cannot delete the product from the order ${error}`);
+    }
+  }
 }
