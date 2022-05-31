@@ -38,6 +38,8 @@ Endpoint : `/api/products`
 
 `/delete/:id` : delete product by id [token required] \[post]
 
+`/user/:userid/recent` : show recent products burchased by a user by id \[token required] \[get] \[parameters : {rows:Number}]
+
 ## Orders routes
 
 Endpoint : `/api/orders`
@@ -60,7 +62,9 @@ Endpoint : `/api/orders`
 
 `/:id/deleteProduct` : delete product from an order by id [token required] \[post] \[parameters : {"productId":Number}]
 
-`/active/:userId` : show active orders by specific user by id \[token required] \[get]
+`/user/:userId` : show orders by specific user by id \[token required] \[get]
+
+`/user/:userId/active` : show active orders by specific user by id \[token required] \[get]
 
 '/:id/products' : show all products report for an order by id \[token required] \[get]
 
@@ -95,6 +99,20 @@ Endpoint : `/api/departments`
 `/edit/:id` : edit department informations [token required] \[post] \[parameters : {'name':String }]
 
 `/delete/:id` : delete a department by id [token required] \[post]
+
+## dashboard routes
+
+Endpoint : `/api/dashboard`
+
+### Routes:
+
+`/common/products` : show most common products \[get] \[parameters : {'rows':number}]
+
+`/common/suppliers` : show most common suppliers \[get] \[parameters : {'rows':number}]
+
+`/common/departments` : show most common departments \[get] \[parameters : {'rows':number}]
+
+`/departments_avg` : show average prices in each department \[get]
 
 ## Sign in route
 

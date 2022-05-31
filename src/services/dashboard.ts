@@ -1,21 +1,59 @@
-import client from "../datebase";
-
-export type order = {
-  id: Number;
-  user_id: Number;
-  active: boolean;
-};
+import { query } from "../datebase";
+import DashpoardSql from "./sql/dashboard";
+import {
+  product,
+  supplier,
+  departmentAvg,
+  departmentPurch,
+} from "./types/Types";
 
 export class Dashboard {
-  async userCurrentOrders(id: Number): Promise<order[]> {
+  dashpoardSql: DashpoardSql;
+  constructor() {
+    this.dashpoardSql = new DashpoardSql();
+  }
+
+  async showmostCommonProducts(rowsNumber: number): Promise<product[]> {
     try {
-      const connection = await client.connect();
-      const sql = ` SELECT * FROM orders WHERE user_id=${id} and active=true;`;
-      const res = await connection.query(sql);
-      connection.release();
+      const res = await query(
+        this.dashpoardSql.showMostCommonProducts(rowsNumber)
+      );
       return res.rows;
     } catch (error) {
-      throw new Error(`couldn't get orders ${error}`);
+      throw new Error(`cannot show the products ${error}`);
+    }
+  }
+
+  async showmostCommonSuppliers(rowsNumber: number): Promise<supplier[]> {
+    try {
+      const res = await query(
+        this.dashpoardSql.showMostCommonSuppliers(rowsNumber)
+      );
+      return res.rows;
+    } catch (error) {
+      throw new Error(`cannot show the suppliers ${error}`);
+    }
+  }
+
+  async showAveragePriceInDepartments(): Promise<departmentAvg[]> {
+    try {
+      const res = await query(
+        this.dashpoardSql.showAveragePriceInDepartments()
+      );
+      return res.rows;
+    } catch (error) {
+      throw new Error(`cannot show the departments ${error}`);
+    }
+  }
+
+  async showCommonDepartments(rowsNumber: number): Promise<departmentPurch[]> {
+    try {
+      const res = await query(
+        this.dashpoardSql.showCommonDepartments(rowsNumber)
+      );
+      return res.rows;
+    } catch (error) {
+      throw new Error(`cannot show the departments ${error}`);
     }
   }
 }

@@ -1,12 +1,12 @@
 import express, { Request, Response } from "express";
 import { Orders } from "../models/orders";
 import { ProductOrders } from "../models/products_orders";
-import { Dashboard } from "../services/dashboard";
+import { CrossModels } from "../services/crossModels";
 import { authenticate } from "../middleware/authenticate";
 
 const orders = new Orders();
 const productOrders = new ProductOrders();
-const dashboard = new Dashboard();
+const crossModels = new CrossModels();
 
 const index = async (_req: Request, res: Response): Promise<void> => {
   try {
@@ -106,13 +106,21 @@ const editProductInOrder = async (
   }
 };
 
-const userCurrentOrders = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+const useOrders = async (req: Request, res: Response): Promise<void> => {
   try {
-    const orders = await dashboard.userCurrentOrders(Number(req.params.userid));
-    res.send(orders);
+    const userOrders = await orders.userOrders(Number(req.params.userid));
+    res.send(userOrders);
+  } catch (error) {
+    throw new Error(`cannot show the orders ${error}`);
+  }
+};
+
+const userActiveOrders = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const activeOrders = await orders.useractiveOrders(
+      Number(req.params.userid)
+    );
+    res.send(activeOrders);
   } catch (error) {
     throw new Error(`cannot show the orders ${error}`);
   }
@@ -123,7 +131,9 @@ const showOrderProducts = async (
   res: Response
 ): Promise<void> => {
   try {
-    const products = await orders.showProducts(Number(req.params.id));
+    const products = await crossModels.showProductsInOrder(
+      Number(req.params.id)
+    );
     res.send(products);
   } catch (error) {
     throw new Error(`cannot show the orders ${error}`);
@@ -139,6 +149,7 @@ export const ordersRoutes = (app: express.Application) => {
   app.post("/:id/addProduct", authenticate, addProductToOrder);
   app.post("/:id/editProduct", authenticate, editProductInOrder);
   app.post("/:id/deleteProduct", authenticate, deleteProductFromOrder);
-  app.get("/active/:userid", authenticate, userCurrentOrders);
+  app.get("/user/:userid", authenticate, useOrders);
+  app.get("/user/:userid/active", authenticate, userActiveOrders);
   app.get("/:id/products", authenticate, showOrderProducts);
 };

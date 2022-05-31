@@ -69,14 +69,21 @@ export class Orders {
     }
   }
 
-  async showProducts(id: number): Promise<orderProducts[]> {
+  async useractiveOrders(id: number): Promise<order[]> {
     try {
-      const res = await query(this.ordersSql.showProductsInOrder(id));
+      const res = await query(this.ordersSql.userActiveOrders(id));
       return res.rows;
     } catch (error) {
-      throw new Error(
-        `cannot show the products in this order the order ${error}`
-      );
+      throw new Error(`couldn't get orders ${error}`);
+    }
+  }
+
+  async userOrders(id: number): Promise<order[]> {
+    try {
+      const res = await query(this.ordersSql.userOrders(id));
+      return res.rows;
+    } catch (error) {
+      throw new Error(`couldn't get orders ${error}`);
     }
   }
 }

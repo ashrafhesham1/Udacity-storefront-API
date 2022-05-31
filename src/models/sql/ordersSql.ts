@@ -19,22 +19,16 @@ class OrdersSql {
     return `DELETE FROM orders WHERE id = ${id} RETURNING id;`;
   };
 
-  showProductsInOrder = (orderId: number): string => {
+  userActiveOrders = (id: number) => {
     return `
-            SELECT 
-            products.id as product_id ,
-            products.name as product_name ,
-            price,
-            quantity,
-            price * quantity as total,
-            suppliers.name as supplier,
-            departments.name as department
-            FROM products_orders
-            JOIN products ON products.id = products_orders.product_id
-            JOIN suppliers ON products.supplier_id = suppliers.id
-            JOIN departments ON products.department_id = departments.id
-            WHERE order_id = ${orderId} ;
-        `;
+         SELECT * FROM orders 
+         WHERE user_id=${id} and active=true;`;
+  };
+
+  userOrders = (id: number) => {
+    return `
+         SELECT * FROM orders 
+         WHERE user_id=${id};`;
   };
 }
 

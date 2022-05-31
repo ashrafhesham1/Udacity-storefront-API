@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express";
 import { Products } from "../models/products";
+import { CrossModels } from "../services/crossModels";
 import { authenticate } from "../middleware/authenticate";
 
 const products = new Products();
+const crossModels = new CrossModels();
 
 const index = async (_req: Request, res: Response): Promise<void> => {
   try {
@@ -61,9 +63,25 @@ const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const userRecentPurchases = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const Purchases = await crossModels.showUserRecentPurchases(
+      Number(req.params.userid),
+      Number(req.query.rows)
+    );
+    res.json(Purchases);
+  } catch (error) {
+    throw new Error(`cannot show the Purchases ${error}`);
+  }
+};
+
 export const productsRoutes = (app: express.Application) => {
   app.get("/index", index);
   app.get("/:id", showProduct);
+  app.get("/user/:userid/recent", authenticate, userRecentPurchases);
   app.post("/create", authenticate, createProduct);
   app.post("/edit/:id", authenticate, editProduct);
   app.post("/delete/:id", authenticate, deleteProduct);
